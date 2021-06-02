@@ -136,7 +136,7 @@ def printTensors(model_file):
 
 @app.route('/')
 def homepage():
-    return 'This backend serves as a REST API for the React front end. Try running npm start from the self-checkout folder.'
+    return 'REST API Core for Grab and Go Detection Service'
 
 
 @app.route('/detection', methods=['POST'])
