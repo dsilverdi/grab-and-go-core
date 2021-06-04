@@ -17,8 +17,6 @@ import re, time, base64
 from random import randint
 
 app = Flask(__name__)
-app.config['modelfn'] = setup_model()
-
 CORS(app)
 
 ##########################################################
@@ -115,7 +113,6 @@ def homepage():
 @app.route('/detection', methods=['POST'])
 def detection():
     request.get_data()
-    detect_fn = app.config['modelfn'] 
     # Load in an image to object detect and preprocess it
     img_data = getI420FromBase64(request.data)
     image_np = load_image_into_numpy_array(img_data)
@@ -127,17 +124,11 @@ def detection():
 
     dt_det = time.time() - t_det
     app.logger.info("Execution time: %0.2f" % (dt_det * 1000.))
-
     # Different results arrays
-    # print(detections)
     predictions_det = detections['detection_classes']
     prediction_scores_det=detections['detection_scores'][0].numpy(),
     prediction_boxes_det= detections['detection_boxes'][0].numpy(),
     prediction_num_det=detections['num_detections'][0]
-    print("----------------------------")
-    print(predictions_det)
-    print(prediction_scores_det)
-    print("----------------------------")
 
     threshold = 0.85
 
@@ -162,7 +153,6 @@ def detection():
            
     print("number and list of items that above the threshold")
     print(len(label))
-    print(label)
     return jsonify(label)
 
 
@@ -177,5 +167,5 @@ if __name__ == '__main__':
     print('Configuring TensorFlow Graph..')
 
     print('Loading Model...')
-
+    detect_fn = setup_model() 
     app.run(debug=False, host='0.0.0.0')
