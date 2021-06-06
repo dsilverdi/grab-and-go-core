@@ -15,3 +15,9 @@ Flask-User==1.0.1.5
 # Automated tests
 pytest==3.0.5
 pytest-cov==2.4.0
+
+# Payment API
+midtransclient
+
+# Other PKG
+python-dotenv

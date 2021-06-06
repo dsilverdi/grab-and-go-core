@@ -1,8 +1,5 @@
-import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-
-from imageio import imread
 import numpy as np
 import tensorflow as tf
 
@@ -15,6 +12,7 @@ from PIL import Image
 import re, time, base64
 
 from random import randint
+from payment_service import execute_payment
 
 app = Flask(__name__)
 CORS(app)
@@ -154,6 +152,17 @@ def detection():
     print("number and list of items that above the threshold")
     print(len(label))
     return jsonify(label)
+
+@app.route('/payment', methods=['POST'])
+def payment():
+    data = request.json
+    response = execute_payment(data)
+    msg = {
+        "message":"payment success",
+        "data": response
+
+    }
+    return jsonify(msg)
 
 
 ##################################################
