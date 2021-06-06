@@ -1,3 +1,5 @@
+#!/bin/bash
+
 git clone https://github.com/tensorflow/models
 cd models/research/
 protoc object_detection/protos/*.proto --python_out=.
