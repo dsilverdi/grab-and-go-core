@@ -14,6 +14,11 @@ chmod +x setupapi.sh
 ./setupapi.sh
 ```
 
+to run the backend service
+```bash
+python app.py
+```
+
 # API Endpoints
 ## Predict Object
 returns json data about prediction acording to base64 image input
