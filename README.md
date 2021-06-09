@@ -46,4 +46,69 @@ returns json data about prediction acording to base64 image input
         },
     ]
     ```
+
+## Payment Checkout
+process payment checkout using Midtrans Core-API for e-Wallet
+* **URL**
+
+  /payment
+
+* **Method:**
+
+  `POST`
+
+* **Request Body**
+
+  ```json
+  {
+    "order_id":"some-id-test",
+    "total":35000,
+    "callback_url":"application uri"
+  }
+  ```
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+    {
+      "data": {
+          "actions": [
+              {
+                  "method": "GET",
+                  "name": "generate-qr-code",
+                  "url": "https://api.sandbox.veritrans.co.id/v2/gopay/57703be5-689c-4b58-bc9a-714026911968/qr-code"
+              },
+              {
+                  "method": "GET",
+                  "name": "deeplink-redirect",
+                  "url": "https://simulator.sandbox.midtrans.com/gopay/partner/app/payment-pin?id=644fd3ef-7b2d-4e75-a596-813399ddfbc5"
+              },
+              {
+                  "method": "GET",
+                  "name": "get-status",
+                  "url": "https://api.sandbox.veritrans.co.id/v2/57703be5-689c-4b58-bc9a-714026911968/status"
+              },
+              {
+                  "method": "POST",
+                  "name": "cancel",
+                  "url": "https://api.sandbox.veritrans.co.id/v2/57703be5-689c-4b58-bc9a-714026911968/cancel"
+              }
+          ],
+          "currency": "IDR",
+          "fraud_status": "accept",
+          "gross_amount": "35000.00",
+          "merchant_id": {{merchant-id}},
+          "order_id": "cececece",
+          "payment_type": "gopay",
+          "status_code": "201",
+          "status_message": "GoPay transaction is created",
+          "transaction_id": {{transaction-id}},
+          "transaction_status": "pending",
+          "transaction_time": "2021-06-09 21:20:43"
+      },
+      "message": "payment success"
+    }
+    ```
  
